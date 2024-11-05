@@ -3,8 +3,10 @@ import s from "./ContactList.module.css"
 const ContactList = ({ contacts }) => {
     return (
          <ul className={s.list}>
-      {contacts.map(contact => (
-        <Contact key={contact.id} name={contact.name} number={contact.number} />
+      {contacts.map(({ id, name, number })=> (
+          <Contact key={id}
+                   name={name}
+                   number={number} />
       ))}
     </ul>
     )

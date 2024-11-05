@@ -1,6 +1,6 @@
 import { useState } from 'react'
 // import ContactForm from "./components/ContactForm/ContactForm"
-// import SearchBox from "./components/SearchBox/SearchBox"
+import SearchBox from "./components/SearchBox/SearchBox"
 import ContactList from "./components/ContactList/ContactList"
 // import Contact from "./components/Contact/Contact"
 import './App.css'
@@ -14,12 +14,24 @@ const App = () => {
     { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
   ]);
 
+    const [filter, setFilter] = useState("");
+
+  // Фільтрація контактів
+  const filteredContacts = contacts.filter(contact =>
+    contact.name.includes(filter)
+  );
+
+  // оновлення фільтра
+  const handleFilterChange = (value) => {
+    setFilter(value);
+  };
+
   return (
     <div>
       <h1>Phonebook</h1>
       {/* <ContactForm /> */}
-      {/* <SearchBox /> */}
-      <ContactList contacts={contacts} />
+      <SearchBox  filter={filter} onFilterChange={handleFilterChange}  />
+      <ContactList contacts={filteredContacts} />
     </div>
   );
 }
