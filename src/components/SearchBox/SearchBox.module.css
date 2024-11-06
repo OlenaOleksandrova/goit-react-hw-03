@@ -11,4 +11,6 @@
     width: 400px;
     margin-bottom: 10px;
     border: 1px solid #141414;
+    box-shadow: 0 0 8px rgb(135, 203, 225);
+    height: 30px;
 }

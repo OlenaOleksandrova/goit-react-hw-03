@@ -1,8 +1,8 @@
 import { useState } from 'react'
-// import ContactForm from "./components/ContactForm/ContactForm"
+import ContactForm from "./components/ContactForm/ContactForm"
 import SearchBox from "./components/SearchBox/SearchBox"
 import ContactList from "./components/ContactList/ContactList"
-// import Contact from "./components/Contact/Contact"
+import { nanoid } from 'nanoid';
 import './App.css'
 
 const App = () => {
@@ -14,11 +14,21 @@ const App = () => {
     { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
   ]);
 
-    const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState("");
+  
+  // додавання нового контакту
+  const addContact = ({ name, number }) => {
+    const newContact = {
+      id: nanoid(), // ID для контакту
+      name,
+      number,
+    };
+    setContacts(prevContacts => [...prevContacts, newContact]);
+  };
 
   // Фільтрація контактів
   const filteredContacts = contacts.filter(contact =>
-    contact.name.includes(filter)
+    contact.name?.includes(filter)
   );
 
   // оновлення фільтра
@@ -29,7 +39,7 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
-      {/* <ContactForm /> */}
+      <ContactForm onSubmit={addContact} />
       <SearchBox  filter={filter} onFilterChange={handleFilterChange}  />
       <ContactList contacts={filteredContacts} />
     </div>
