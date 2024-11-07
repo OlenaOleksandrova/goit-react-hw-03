@@ -8,8 +8,14 @@ const ContactForm = () => {
         options.resetForm();
     };
 
+// const ContactForm = ({ onSubmit }) => {
+//   const handleSubmit = (values, { resetForm }) => {
+//     onSubmit(values); 
+//     resetForm();
+//   };
+
     const orderSchema = Yup.object().shape({
-        username: Yup.string().min(3, "мінімальна кількість символів - 3")
+        name: Yup.string().min(3, "мінімальна кількість символів - 3")
             .max(50, "максимальна кількість символів" - 50)
             .required("обов'язкове для заповнення"),
         number: Yup.string()
@@ -17,8 +23,8 @@ const ContactForm = () => {
     });
 
 const initialValues = { 
-        username: "",
-        number: "",    
+        name: "",
+        number: "",   
     };
 
    
@@ -31,13 +37,13 @@ const initialValues = {
                 <Form className={s.form} > 
                    <label className={s.label}>
                      <span className={s.span} >Name</span>
-                        <Field className={s.input} name="username" />
-                        <ErrorMessage name="username" component="text" className={s.error} />
+                        <Field className={s.input} name="name" />
+                        <ErrorMessage name="name" component="div" className={s.error} />
                      </label>
                     <label className={s.label}>
                      <span className={s.span}>Number</span>
                         <Field className={s.input} name="number" />
-                        <ErrorMessage name="number" component="text" className={s.error} />
+                        <ErrorMessage name="number" component="div" className={s.error} />
                         </label>
                 <button className={s.buttonForm} type="submit">Add contact</button>
                 </Form>

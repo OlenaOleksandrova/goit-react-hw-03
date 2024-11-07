@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ContactForm from "./components/ContactForm/ContactForm"
 import SearchBox from "./components/SearchBox/SearchBox"
 import ContactList from "./components/ContactList/ContactList"
@@ -15,6 +15,18 @@ const App = () => {
   ]);
 
   const [filter, setFilter] = useState("");
+
+    useEffect(() => {
+    const savedContacts = JSON.parse(localStorage.getItem('contacts'));
+    if (savedContacts) {
+      setContacts(savedContacts);
+    }
+    }, []);
+  
+   // Збереження контактів 
+  useEffect(() => {
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
   
   // додавання нового контакту
   const addContact = ({ name, number }) => {
@@ -26,22 +38,26 @@ const App = () => {
     setContacts(prevContacts => [...prevContacts, newContact]);
   };
 
+  const deleteContact = (id) => {
+    setContacts(prevContacts => prevContacts.filter(contact => contact.id !== id));
+  }
+
   // Фільтрація контактів
   const filteredContacts = contacts.filter(contact =>
-    contact.name?.includes(filter)
+    contact.name?.toLowerCase().includes(filter.toLowerCase())
   );
 
-  // оновлення фільтра
-  const handleFilterChange = (value) => {
-    setFilter(value);
-  };
+  // // оновлення фільтра
+  // const handleFilterChange = (value) => {
+  //   setFilter(value);
+  // };
 
   return (
     <div>
       <h1>Phonebook</h1>
       <ContactForm onSubmit={addContact} />
-      <SearchBox  filter={filter} onFilterChange={handleFilterChange}  />
-      <ContactList contacts={filteredContacts} />
+      <SearchBox  filter={filter} onFilterChange={setFilter}  />
+      <ContactList contacts={filteredContacts} onDeleteContact={deleteContact}/>
     </div>
   );
 }
