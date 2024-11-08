@@ -2,17 +2,17 @@ import { ErrorMessage, Field, Form, Formik } from "formik"
 import s from "./ContactForm.module.css"
 import * as Yup from 'yup';
 
-const ContactForm = () => {
-    const handleSubmit = (values, options) => {
-        console.log(values);
-        options.resetForm();
-    };
+// const ContactForm = () => {
+//     const handleSubmit = (values, options) => {
+//         console.log(values);
+//         options.resetForm();
+//     };
 
-// const ContactForm = ({ onSubmit }) => {
-//   const handleSubmit = (values, { resetForm }) => {
-//     onSubmit(values); 
-//     resetForm();
-//   };
+const ContactForm = ({ onSubmit }) => {
+  const handleSubmit = (values, { resetForm }) => {
+    onSubmit(values); 
+    resetForm();
+  };
 
     const orderSchema = Yup.object().shape({
         name: Yup.string().min(3, "мінімальна кількість символів - 3")
